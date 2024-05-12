@@ -3,6 +3,25 @@
 
 #include <SFML/Graphics.hpp>
 #include "dot_object.h"
+#include "maze_object.h"
+#include <vector>
+#include <set>
+#include <iostream>
+#include <functional>
+#include <algorithm>
+#include <list>
+
+using namespace std;
+
+struct Vector2fComparator {
+    bool operator() (const sf::Vector2f& lhs, const sf::Vector2f& rhs) const {
+        if (lhs.x < rhs.x) return true;
+        if (rhs.x < lhs.x) return false;
+        if (lhs.y < rhs.y) return true;
+        if (rhs.y < lhs.y) return false;
+        return false;
+    }
+};
 
 class Pacman {
 public:
@@ -11,20 +30,15 @@ public:
     int lives;
     float speed;
     int score;
-    sf::Texture texture;
-    int currentFrame;
+	int radius;
+    set<sf::Vector2f, Vector2fComparator> allowedPositions;
+    list<sf::Vector2f> path;
 
-    Pacman(float startX, float startY);
-
-    void move(const std::vector<std::vector<int>>& maze, std::vector<Dot>& dots, int TILE_SIZE);
-    void eatDot();
-    void draw(sf::RenderWindow& window, int TILE_SIZE);
-	void handleInput(sf::Event& event);
-	void setDirection(sf::Vector2f newDirection);
-	void collidesWith(std::vector<std::vector<int>>& maze, int TILE_SIZE);
-	bool isPathClear(const std::vector<std::vector<int>>& maze, int TILE_SIZE, sf::Vector2f newDirection);
-    sf::FloatRect getGlobalBounds(int TILE_SIZE) const;
-	void moveBack();
+    Pacman(const Maze& maze);
+    void move(const Maze& maze);
+    void draw(sf::RenderWindow& window);
+    void handleInput(sf::Event& event);
+    sf::Vector2f getCenter();
 };
 
 #endif // !PACMANOBJECT_H

@@ -7,9 +7,10 @@ class Dot {
 public:
     sf::Vector2f position;
     bool eaten;
+	float radius;
 
-    Dot(float startX, float startY);
-	void draw(sf::RenderWindow& window, int TILE_SIZE);
+	Dot(sf::Vector2f position, int TILE_SIZE);
+	void draw(sf::RenderWindow& window);
 	void eat();
 	bool isEaten() const;
 	sf::Vector2f getPosition() const;

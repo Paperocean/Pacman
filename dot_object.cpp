@@ -1,20 +1,19 @@
 #include "dot_object.h"
 
-Dot::Dot(float startX, float startY)
+Dot::Dot(sf::Vector2f position, int TILE_SIZE)
 {
-    position = sf::Vector2f(startX, startY);
-    eaten = false;
+	this->position = position;
+	this->radius = TILE_SIZE / 9;
+	this->eaten = false;
 }
 
-void Dot::draw(sf::RenderWindow& window, int TILE_SIZE)
-{
-	if (!eaten)
-	{
-		sf::CircleShape dot(TILE_SIZE / 10);
-		dot.setPosition(position);
-		dot.setFillColor(sf::Color::Red);
-		window.draw(dot);
-	}
+void Dot::draw(sf::RenderWindow& window) {
+    if (!eaten) {
+        sf::CircleShape circle(radius);
+        circle.setFillColor(sf::Color::Red);
+        circle.setPosition(position.x - radius, position.y - radius); 
+        window.draw(circle);
+    }
 }
 
 void Dot::eat()

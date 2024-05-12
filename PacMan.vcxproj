@@ -131,11 +131,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dot_object.cpp" />
+    <ClCompile Include="ghost_object.cpp" />
     <ClCompile Include="PacMan.cpp" />
     <ClCompile Include="pacman_object.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dot_object.h" />
+    <ClInclude Include="ghost_object.h" />
     <ClInclude Include="maze_object.h" />
     <ClInclude Include="pacman_object.h" />
   </ItemGroup>
