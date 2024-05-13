@@ -44,8 +44,11 @@ public:
     }
 
     int getTileAt(int h, int w) const {
-        return maze[h][w];
+        int tile = maze[h][w];
+        std::cout << "getTileAt(" << h << ", " << w << ") = " << tile << std::endl;
+        return tile;
     }
+
 
     void draw(sf::RenderWindow& window, vector<Dot>& dots) {
 		//sf::VertexArray lines(sf::Lines);
@@ -84,7 +87,7 @@ public:
         }
     }
 
-	bool isWall(int x, int y) {
+	bool isWall(int x, int y) const {
 		return maze[y][x] == 1;
 	}
 
@@ -97,6 +100,35 @@ public:
 			}
 		}
 	}
+
+    std::vector<sf::Vector2f> getNeighbors(sf::Vector2f point) {
+        std::vector<sf::Vector2f> neighbors;
+        int x = point.x / TILE_SIZE;
+        int y = point.y / TILE_SIZE;
+
+        // SprawdŸ punkt na górze
+        if (y - 1 >= 0 && y - 1 < HEIGHT && getTileAt(y - 1, x) != 1) {
+            neighbors.push_back(sf::Vector2f(x * TILE_SIZE, (y - 1) * TILE_SIZE));
+        }
+
+        // SprawdŸ punkt na dole
+        if (y + 1 >= 0 && y + 1 < HEIGHT && getTileAt(y + 1, x) != 1) {
+            neighbors.push_back(sf::Vector2f(x * TILE_SIZE, (y + 1) * TILE_SIZE));
+        }
+
+        // SprawdŸ punkt po lewej stronie
+        if (x - 1 >= 0 && x - 1 < WIDTH && getTileAt(y, x - 1) != 1) {
+            neighbors.push_back(sf::Vector2f((x - 1) * TILE_SIZE, y * TILE_SIZE));
+        }
+
+        // SprawdŸ punkt po prawej stronie
+        if (x + 1 >= 0 && x + 1 < WIDTH && getTileAt(y, x + 1) != 1) {
+            neighbors.push_back(sf::Vector2f((x + 1) * TILE_SIZE, y * TILE_SIZE));
+        }
+
+        return neighbors;
+    }
+
 };
 
 #endif // !MAZE_OBJECT_H

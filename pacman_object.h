@@ -10,18 +10,9 @@
 #include <functional>
 #include <algorithm>
 #include <list>
+#include <queue>
 
 using namespace std;
-
-struct Vector2fComparator {
-    bool operator() (const sf::Vector2f& lhs, const sf::Vector2f& rhs) const {
-        if (lhs.x < rhs.x) return true;
-        if (rhs.x < lhs.x) return false;
-        if (lhs.y < rhs.y) return true;
-        if (rhs.y < lhs.y) return false;
-        return false;
-    }
-};
 
 class Pacman {
 public:
@@ -31,14 +22,19 @@ public:
     float speed;
     int score;
 	int radius;
-    set<sf::Vector2f, Vector2fComparator> allowedPositions;
-    list<sf::Vector2f> path;
+    list<sf::Vector2f> path; 
+    float progress;
 
     Pacman(const Maze& maze);
+    void initializePath(const Maze& maze);
+    bool isNextPointInDirection(const sf::Vector2f& newDirection);
     void move(const Maze& maze);
+    bool isValidDirection(const sf::Vector2f& newDirection, const Maze& maze);
+    void handleInput(sf::Event& event, const Maze& maze);
     void draw(sf::RenderWindow& window);
-    void handleInput(sf::Event& event);
-    sf::Vector2f getCenter();
+    sf::Vector2f getCenter() const;
+	sf::Vector2f getPosition() const;
+	sf::Vector2f getDirection() const;
 };
 
 #endif // !PACMANOBJECT_H

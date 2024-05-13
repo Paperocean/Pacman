@@ -55,14 +55,15 @@ int main() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+            
+            if (event.type == sf::Event::KeyPressed) {
+                pacman.handleInput(event, maze);
+                //std::cout << "Pacman direction: " << pacman.getDirection().x << ", " << pacman.getDirection().y << std::endl;
+            }
 
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 isPaused = !isPaused;
             }
-
-			if (!isPaused) {
-				pacman.handleInput(event);
-			}
         }
 
         bool allDotsEaten = false;
@@ -128,12 +129,13 @@ int main() {
 		}
         else {
             window.clear();
-			maze.draw(window, dots);
             for (auto& dot : dots) {
                 dot.draw(window);
             }
+			maze.draw(window, dots);
 			pacman.draw(window);
-			pacman.move(maze);
+            pacman.move(maze);
+            std::cout << "Pacman position: " << pacman.getPosition().x << ", " << pacman.getPosition().y << std::endl;
 
             //scoreText.setString("Score Pacman 1: " + std::to_string(pacman.score));
             scoreText.setPosition(10, 10);
