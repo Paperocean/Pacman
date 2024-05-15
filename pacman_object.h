@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <list>
 #include <queue>
+#include <limits>
 
 using namespace std;
 
@@ -23,18 +24,13 @@ public:
     int score;
 	int radius;
     list<sf::Vector2f> path; 
-    float progress;
 
     Pacman(const Maze& maze);
-    void initializePath(const Maze& maze);
-    bool isNextPointInDirection(const sf::Vector2f& newDirection);
-    void move(const Maze& maze);
-    bool isValidDirection(const sf::Vector2f& newDirection, const Maze& maze);
-    void handleInput(sf::Event& event, const Maze& maze);
+    void moveTo(int x, int y);
     void draw(sf::RenderWindow& window);
     sf::Vector2f getCenter() const;
 	sf::Vector2f getPosition() const;
-	sf::Vector2f getDirection() const;
+    sf::Vector2f getDirection() const;
 };
 
 #endif // !PACMANOBJECT_H
